@@ -1,29 +1,32 @@
-#vue2.0仿手机版美图官网
-  看着各位大神的vue项目泉涌而出,本阶段正在学习Vue的小小白也打算亲自操起键盘来感受一把Vue世界的美好~~
-##在线预览
-  在线demo  https://zsqio.github.io/vuex-meitu-demo/index.html#/
-  github    https://github.com/zsqio/vue-meitu
-##项目概括
-  ###技术栈
-   - vue2.0
-   - vuex     专为 Vue.js 应用程序开发的状态管理模式,集中式存储管理应用的所有组件的状态
-   - Swiper   第三方插件Swiper 使用详情可见 (http://www.swiper.com.cn/)
-   - mint-ui  基于vue.js的移动端组件库 帮助快速搭建页面
-   - html5 css3
-  ###主要实现功能
-   ####商品信息展示
-   - 轮播图
-   - mint-ui  navbar切换 商品信息 产品参数,Toast 用户提醒信息
-   - 列表展示手机配件商品信息
-    ![image](https://raw.githubusercontent.com/zsqio/zsqio.github.io/master/vuex-meitu-demo/demo-images/1.gif)
-   ####购物车
-   - 加入购物车
-    ![image](https://raw.githubusercontent.com/zsqio/zsqio.github.io/master/vuex-meitu-demo/demo-images/2.gif)
-      加入购物车存在两种情况：
-       1. 该商品已经存在购物车中,此时商品数量+1即可
-       - 商品不在购物车,将新加入的商品信息push进cartList
-   - 删除购物车商品
-      根据选中即将删除商品的id在cartList中遍历出该商品并给予删除,因为我在项目里是一个数组暂存购物车中的商品，所以可以使用数组的splice方法将指定下标的某个商品删除,即 cartList.splice(index, 1)
+vue2.0仿手机版美图官网
+========
+    看着各位大神的vue项目泉涌而出,本阶段正在学习Vue的小小白也打算亲自操起键盘来感受一把Vue世界的美好~~
+在线预览
+-------
+    在线demo  https://zsqio.github.io/vuex-meitu-demo/index.html#/
+    github    https://github.com/zsqio/vue-meitu
+项目概括
+-------
+  ###技术栈###
+      - vue2.0
+      - vuex     专为 Vue.js 应用程序开发的状态管理模式,集中式存储管理应用的所有组件的状态
+      - Swiper   第三方插件Swiper 使用详情可见 (http://www.swiper.com.cn/)
+      - mint-ui  基于vue.js的移动端组件库 帮助快速搭建页面
+      - html5 css3
+  ###主要实现功能###
+    ####商品信息展示####
+      - 轮播图
+      - mint-ui  navbar切换 商品信息 产品参数,Toast 用户提醒信息
+      - 列表展示手机配件商品信息
+          ![image](https://raw.githubusercontent.com/zsqio/zsqio.github.io/master/vuex-meitu-demo/demo-images/1.gif)
+   ####购物车####
+      - 加入购物车
+          ![image](https://raw.githubusercontent.com/zsqio/zsqio.github.io/master/vuex-meitu-demo/demo-images/2.gif)
+          加入购物车存在两种情况：
+          <1  该商品已经存在购物车中,此时商品数量+1即可
+          <2  商品不在购物车,将新加入的商品信息push进cartList
+      - 删除购物车商品
+          根据选中即将删除商品的id在cartList中遍历出该商品并给予删除,因为我在项目里是一个数组暂存购物车中的商品，所以可以使用数组的splice方法将指定下标的某个商品删除,即 cartList.splice(index, 1)
      ![image](https://raw.githubusercontent.com/zsqio/zsqio.github.io/master/vuex-meitu-demo/demo-images/3.gif)
    - 商品支付
      根据用户选中前往支付的商品动态的显示需要支付的总金额,此时购物车中的商品如同一个个复选按钮，可选可不选，可单选可多选,使用户的购物体验更好,这些共享状态之间相互切换，来及时驱动界面的渲染
