@@ -272,7 +272,7 @@ export default {
   margin-top: .5rem;
   text-decoration: none;
 }
-.item .icon {
+.view .item .icon {
   display: block;
   width: 5rem;
   height: 5rem;

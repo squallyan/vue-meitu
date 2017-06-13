@@ -10,7 +10,7 @@
     </mt-header>
     <div class="cart-list">
       <router-link to='/goods'>
-        <p v-show="descShow" class="cart-desc">购物车中还没有东西,现在去挑选</p>
+        <p v-show="descShow" class="cart-desc">购物车中还没有东西,现在去挑选吧~</p>
       </router-link>
       <div class="product-wrapper">
         <ul class="products-list" >
@@ -149,16 +149,24 @@ export default {
       this.$store.commit('CHECK_CART', goodId)
       this.$store.commit('ADD_CART')
     },
-    submitOrder: function () {
-      if(!this.$store.state.cart.login) {
+    submitOrder: function (e) {
+      if(this.$store.state.cart.cartList.length === 0) {
+        e.preventDefault()
         this.$toast({
-          message: '请先登录,再提交订单',
+          message: '购物车空空如也~',
           position: 'top',
-          duration: 5000
+          duration: 1000
         })
+      } else {
+        if(!this.$store.state.cart.login) {
+          this.$toast({
+            message: '请先登录,再提交订单',
+            position: 'top',
+            duration: 5000
+          })
+        }
       }
     }
-
   }
 }
 </script>
@@ -173,7 +181,7 @@ export default {
  .cart-desc {
    height: 40rem;
    padding-top: 5rem;
-1  color: #333 !important;  
+   color: #333 ;
    font-size: 1.4rem;
 }
 .cart-basebar {

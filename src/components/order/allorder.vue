@@ -1,5 +1,6 @@
 <template lang="html">
   <div class="">
+    <noOrder v-if="total_nums === 0"></noOrder>
     <div class="order-wrapper" v-if="total_nums > 0">
       <div class="head">
         <p class="desc">共
@@ -31,6 +32,7 @@
 </template>
 
 <script>
+import noOrder from './noOrder'
 export default {
   computed : {
     products () {
@@ -42,6 +44,9 @@ export default {
     total_price() {
       return this.$store.state.cart.orderInfos.order_price
     }
+  },
+  components: {
+    noOrder
   }
 
 }

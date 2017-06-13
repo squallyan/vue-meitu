@@ -197,6 +197,7 @@ export default {
     },
     buyNow: function () {
       this.add_cart()
+      this.$router.push({path:'/cart'})
     }
   }
 }
