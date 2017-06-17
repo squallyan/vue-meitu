@@ -1,98 +1,173 @@
 <template lang="html">
   <div class="info-page">
-    <mt-header title="美图M8">
-      <router-link to="/phone" slot="left">
-        <mt-button icon="back"></mt-button>
+    <div class="header">
+      <router-link to='/phone'>
+        <i class="icon back"></i>
       </router-link>
-      <router-link to='/' slot="right">
-        <span class="gohome"></span>
+      <div class="head-title">
+        <p class="title">美图M8</p>
+        <div v-show ="triShow" @click="showSubmenu" class="triangle1"></div>
+        <div v-show ="!triShow" class="triangle2" @click="hideSubmenu"></div>
+      </div>
+      <router-link to='/'>
+        <i class="icon index"></i>
       </router-link>
-    </mt-header>
-    <div class="info-wrapper">
-      <img class="img" src="http://img1.app.meitudata.com/meitushop/v4/mobile_img/m8/hellokitty/mt-m8-hk.png?v=201704281757" alt="">
-      <p class="desc">64GB | ￥2799</p>
-      <router-link class="rushBtn" to='/rush'>立即抢购</router-link>
     </div>
-    <div class="info-more">
-      <h2 class="main-title">
-        美图M8 Hello Kitty特别版，
-        <br>可爱与时尚的完美碰撞。
-      </h2>
-      <p class="desc">美图手机第四次携手Hello Kitty官方，推出美图M8<br>Hello Kitty特别版，一举萌化你的心。</p>
+    <div class="phone-submenu" v-show="submenu">
+      <ul class="submenu">
+        <router-link to='/summary'>
+          <li @click="changeMenu" class="menu selected">概述</li>
+        </router-link>
+        <router-link to='/photo'>
+          <li @click="changeMenu" class="menu">相关视频</li>
+        </router-link>
+        <router-link to='/photo'>
+          <li @click="changeMenu" class="menu">高清图集</li>
+        </router-link >
+        <router-link to='/param'>
+          <li @click="changeMenu" class="menu">详细参数</li>
+        </router-link>
+        <li @click="changeMenu" class="menu">S码通道</li>
+      </ul>
     </div>
-    <div class="look-info">
-      <img src="http://img1.app.meitudata.com/meitushop/v4/mobile_img/m8/hellokitty/m8-hk-tit.png?v=201705040939" alt="" class="img">
-      <p class="desc">白色纯真可爱，粉色青春无敌，再搭配不同的Hello<br>Kitty造型，让你无法抗拒它的魅力。</p>
-    </div>
+    <Summary v-show="showDefault"></Summary>
+    <router-view></router-view>
   </div>
 </template>
 
 <script>
+import Summary from './summary'
 export default {
+  data () {
+    return {
+      submenu: false,
+      triShow: true,
+      showDefault: true,
+    }
+  },
+  methods: {
+    showSubmenu: function(){
+      this.submenu = true
+      this.triShow = false
+    },
+    hideSubmenu: function(){
+      this.triShow = true
+      this.submenu = false
+    },
+    changeMenu: function(e) {
+      document.querySelector('.selected').classList.remove('selected')
+      if(!e.currentTarget.classList.contains('selected')) {
+        e.currentTarget.classList.add('selected')
+      }
+      this.showDefault= false
+      this.hideSubmenu()
+      console.log('123')
+    }
+  },
+  components:{
+    Summary
+  }
 }
 </script>
 
 <style lang="css" scoped>
-.mint-header {
-  background: #000;
-  color: #fff;
+.header {
+  display: flex;
+  background-color: #120f0f;
+  justify-content: center;
+  align-items: center;
 }
-.info-wrapper {
-  width: 100%;
-  padding-top: 3rem;
-  height: 50rem;
-  background: url(http://img1.app.meitudata.com/meitushop/v4/mobile_img/m8/hellokitty/bg-1.jpg?v=201705031820) no-repeat;
-  background-size:cover;
-  box-sizing: border-box;
+.header {
+  border-bottom: #282828 1px solid;
 }
- .img {
+.header .icon {
+  width: 2rem;
+  height: 2rem;
   display: block;
-  width: 20rem;
-  margin: 0 auto;
-  margin-bottom: 1rem;
 }
-.info-wrapper .desc {
+.header .head-title {
+  flex:1;
   text-align: center;
-  font-size: 1.8rem;
-  color: #000;
-  font-weight: 500;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
-.info-wrapper .rushBtn {
-  width: 10rem;
-  height: 3rem;
-  line-height: 3rem;
-  display: block;
-  margin: 0 auto;
-  color: #fff;
-  background: #ff6495;
-  margin-top: 2rem;
-  text-align: center;
-  font-size: 1.4rem;
-}
-.info-more {
-  width: 100%;
-  height: 50rem;
-  background: url(http://img1.app.meitudata.com/meitushop/v4/mobile_img/m8/hellokitty/bg-3.jpg?v=201705031820) no-repeat;
-  background-size: cover;
-  padding-top: 3rem;
-  box-sizing: border-box;
-}
-.info-more .main-title {
-  color: #ff6495;
-  text-align: center;
-  font-size: 2.5rem;
-  font-weight: normal;
-}
-.desc {
-  text-align: center;
-  margin-top: 2rem;
-  color: #666;
-  font-size: 1.4rem;
-}
-.look-info {
-  width: 100%;
-  height: 50rem;
-  background: url(http://img1.app.meitudata.com/meitushop/v4/mobile_img/m8/hellokitty/bg-4.jpg?v=201705031820)no-repeat;
+.header .icon.back{
+  margin-left: 1rem;
+  background: url(../../assets/images/return.png) no-repeat;
   background-size: cover;
 }
+.header .icon.index{
+  margin-right: 1rem;
+  background: url(../../assets/images/index.png) no-repeat;
+  background-size: cover;
+}
+.head-title .title{
+  color: #fff;
+  font-size: 1.4rem;
+}
+.head-title .triangle1 {
+  width: 0;
+    height: 0;
+    border-left: 0.5rem solid transparent;
+    border-right: 0.5rem solid transparent;
+    border-top: 0.8rem solid #cac9c9;
+    /*margin-top: 1rem;*/
+    margin-left: 1rem;
+}
+.head-title .triangle2 {
+  width: 0;
+    height: 0;
+    border-left: 0.5rem solid transparent;
+    border-right: 0.5rem solid transparent;
+    border-bottom: 0.8rem solid #cac9c9;
+    /*margin-top: 1rem;*/
+    margin-left: 1rem;
+}
+.phone-submenu {
+  width: 100%;
+  background-color: #120f0f;
+  position: absolute;
+  top: 4rem;
+  left: 0;
+  padding-left: 4rem;
+  padding-right: 4rem;
+  box-sizing: border-box;
+  animation: fade-in;
+  animation-duration: 1.5s;
+  z-index: 999;
+}
+@keyframes fade-in {
+  0%{
+    transform: translate(0,-5rem);
+  }
+  50% {
+    transform: translate(0,0);
+  }
+  100% {
+    transform: translate(0,0);
+  }
+}
+.phone-submenu .submenu .menu{
+   width: 100%;
+   height: 5rem;
+   line-height: 5rem;
+   font-size: 1.6rem;
+   font-weight: 500;
+   color: #fff;
+   position: relative;
+}
+.phone-submenu .submenu .menu.selected {
+  color: #f55669;
+}
+.phone-submenu .submenu .menu:after {
+  content:'';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 1px;
+  background: #282828;
+}
+
 </style>

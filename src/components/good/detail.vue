@@ -1,5 +1,5 @@
 <template lang="html">
-  <div class="detail-page">
+  <div class="detail-page" >
     <mt-header>
       <router-link to="/" slot="left">
         <mt-button icon="back"></mt-button>
@@ -8,27 +8,21 @@
         <span class="gohome"></span>
       </router-link>
     </mt-header>
-    <div class="swiper-container3">
-      <div class="swiper-wrapper">
-        <div v-for="img in imgInfo" class="swiper-slide" :class="img.className">
-          <img :src="img.imgSrc" alt="">
-          <p v-show="false" class="good-price">{{img.price}}</p>
-        </div>
-      </div>
-      <div class="swiper-pagination"></div>
-    </div>
+    <swiper :options="swiperOption2" ref="mySwiper">
+      <swiper-slide v-for="img in goodInfo.imgSrc" key="img.id">
+        <img :src="img" alt="">
+      </swiper-slide>
+      <div class="swiper-pagination" slot="pagination"></div>
+    </swiper>
     <div class="good-info">
-      <p class="good-text">限量版美图公仔</p>
-      <p class="good-price">¥59-199</p>
+      <p class="good-text">{{goodInfo.title}}</p>
+      <p class="good-price">￥{{goodInfo.price}}</p>
     </div>
     <div class="selection-fittings">
       <dl class="dl">
-        <dt class="dt">规格:</dt>
-        <dd @click="selectFit" id="0" class="dd selected">全套</dd>
-        <dd @click="selectFit" id="1" class="dd">开心喵</dd>
-        <dd @click="selectFit" id="2" class="dd">招财喵</dd>
-        <dd @click="selectFit" id="3" class="dd">桃花喵</dd>
-        <dd @click="selectFit" id="4" class="dd">许愿喵</dd>
+        <dt class="dt" >规格:</dt>
+        <dd v-for="(spe, index) in goodInfo.specification"
+        @click="selectFit" :id="index" class="dd">{{spe}}</dd>
       </dl>
       <dl class="dl">
         <dt class="dt">数量:</dt>
@@ -58,24 +52,20 @@
       </ul>
     </div>
     <div class="detail-info">
-      <mt-navbar>
-        <mt-tab-item  id="1" class="is-selected">商品详情</mt-tab-item>
+      <mt-navbar v-model="selected">
+        <mt-tab-item  id="1">商品详情</mt-tab-item>
         <mt-tab-item  id="2">规格参数</mt-tab-item>
       </mt-navbar>
-      <mt-tab-container>
-        <mt-tab-container-item id="1">
-          <mt-cell>
-            <img src="http://mshopimg3.meitudata.com/52bd57de4572e44137.jpg" alt="">
-            <img src="http://mshopimg2.meitudata.com/52bd57e12051a12027.jpg" alt="">
-            <img src="http://mshopimg1.meitudata.com/52bd57e46f70789906.jpg" alt="">
-            <img src="http://mshopimg1.meitudata.com/52bd57e7c84f692890.jpg" alt="">
-          </mt-cell>
+      <mt-tab-container v-model="selected">
+        <mt-tab-container-item  id="1">
+          <div class="mt-cell" v-for="detailImg in goodInfo.detailImg">
+            <img :src="detailImg" alt="">
+          </div>
         </mt-tab-container-item>
         <mt-tab-container-item id="2">
-          <mt-cell>
-            <span class="color-type">颜色</span>
-           <span class="color">黄/白/红绿/</span>
-          </mt-cell>
+          <div class="mt-cell" v-for="speImg in goodInfo.speImg">
+            <img :src="speImg" alt="">
+          </div>
         </mt-tab-container-item>
       </mt-tab-container>
     </div>
@@ -101,59 +91,51 @@ export default {
   data () {
     return {
       buyNum: 1,
-      imgInfo: [
-        {
-          imgSrc:'http://mshopimg2.meitudata.com/56405d961f73421827.jpg?thumb350',
-          className:'slide1',
-          price: 199
-        },
-        {
-          imgSrc: 'http://mshopimg2.meitudata.com/56405d9cf192470002.jpg?thumb350',
-          className: 'slide2',
-          price: 59
-        },
-        {
-          imgSrc:'http://mshopimg1.meitudata.com/56405da6b07b196859.jpg?thumb350',
-          className: 'slide3',
-          price: 59
-        },
-        {
-          imgSrc: 'http://mshopimg3.meitudata.com/56405dcc95b4870846.jpg?thumb350',
-          className: 'slide4',
-          price: 59
-        },
-        {
-          imgSrc: 'http://mshopimg1.meitudata.com/56405da3713e642547.jpg?thumb350',
-          className: 'slide5',
-          price: 59
-        }
-
-      ],
-      detailSwiper: null
+      selected: 1,
+      goodInfo:[],
+      url:'',
+      swiperOption2: {
+        autoplay: 3000,
+        initialSlide: 1,
+        loop: true,
+        paginationClickable :true,
+        pagination: '.swiper-pagination',
+      }
     }
+  },
+  mounted (){
+    this.url = this.$store.state.cart.toUrl || 'doll'
+    this.axios.get('http://easy-mock.com/mock/59435cf68ac26d795f180379/detail/'+ this.url)
+      .then((response) => {
+        this.goodInfo = response.data.goodInfo
+        console.log(this.goodInfo)
+      })
+  },
+	watch: {
+		selected: function(val) {
+			this.selected = val;
+		}
   },
   computed : {
     count () {
       return this.$store.state.cart.cartInfos.total_nums
     }
   },
-  mounted () {
-    this.detailSwiper = new Swiper('.swiper-container3', {
-      direction: 'horizontal',
-      resistance: '100%',
-      mousewheelControl: true,
-      grabCursor: true,
-      paginationClickable: true,
-      pagination: '.swiper-pagination'
-    })
-  },
   methods: {
     selectFit: function (e) {
-      console.log(e)
-      document.querySelector('.selected').classList.remove('selected')
-      if(!e.target.classList.contains('selected')) {
-        e.target.classList.add('selected')
+      console.log(e.target)
+      const selected = document.querySelector('.selected')
+      if(selected) {
+        selected.classList.remove('selected')
+        if(!e.currentTarget.classList.contains('selected')) {
+          e.currentTarget.classList.add('selected')
+        }
+      } else {
+        if(!e.currentTarget.classList.contains('selected')) {
+          e.currentTarget.classList.add('selected')
+        }
       }
+
     },
     subNum: function () {
       if(this.buyNum > 1) {
@@ -166,38 +148,46 @@ export default {
       this.buyNum ++
     },
     add_cart: function() {
-      this.$toast({
-        message: '已添加到购物车',
-        position: 'top',
-        duration: 1000,
-        className: 'toast'
-      })
-      let goodId = document.querySelector('.selected').id
-      this.$store.dispatch('check_cart', goodId)
-      const goodTitle = document.querySelector('.good-text').innerHTML
-      const productType = document .querySelector('.selected').innerHTML
-      const imgSrc = this.imgInfo[goodId].imgSrc
-      const goodPrice = this.imgInfo[goodId].price
-      const productInfo ={
-        id: goodId,
-        imgSrc: imgSrc,
-        title: goodTitle,
-        price: goodPrice,
-        perNum: this.buyNum,
-        type: productType,
-        selected: false
+      const selected = document.querySelector('.selected')
+      if(!selected){
+        this.$toast({
+          message:'请选择商品规则',
+          position: 'top',
+          duration: 1000
+        })
+      } else {
+        this.$toast({
+          message: '已添加到购物车',
+          position: 'top',
+          duration: 1000,
+          className: 'toast'
+        })
+        let goodId = document.querySelector('.selected').id
+        console.log(goodId)
+        this.$store.dispatch('check_cart', goodId)
+        const goodTitle = document.querySelector('.good-text').innerHTML
+        const productType = document .querySelector('.selected').innerHTML
+        const imgSrc = this.goodInfo.imgSrc[goodId]
+        const goodPrice = this.goodInfo.price
+        const productInfo ={
+          id: goodId,
+          imgSrc: imgSrc,
+          title: goodTitle,
+          price: goodPrice,
+          perNum: this.buyNum,
+          type: productType,
+          selected: false
+        }
+        if(this.$store.state.cart.curIndex != -1) {
+          this.$store.dispatch('add_cart')
+        }else {
+          this.$store.commit('CREATE_CART',productInfo)
+        }
       }
-      if(this.$store.state.cart.curIndex != -1) {
-        // console.log(this.$store.state.cart.curIndex )
-        this.$store.commit('ADD_CART')
-      }else {
-        // console.log(this.$store.state.cart.curIndex)
-        this.$store.commit('CREATE_CART',productInfo)
-      }
+
     },
     buyNow: function () {
       this.add_cart()
-      this.$router.push({path:'/cart'})
     }
   }
 }
@@ -214,30 +204,25 @@ window.onscroll = function() {
 	}
 </script>
 
-<style lang="css">
-.swiper-container3{
+<style lang="css"  scoped>
+.swiper-container{
   background-color: #fff;
-  /*border: 1px solid #000;*/
   overflow: hidden;
   position: relative;
 }
-.swiper-container3 .swiper-slide img {
-  width: 21rem;
-  height: 21rem;
+ .swiper-slide img {
+  width: 18rem;
+  height: 18rem;
   display: block;
   margin: 0 auto;
   margin-bottom: 1rem;
 }
-.swiper-container3 .swiper-pagination{
-  position: absolute;
-  bottom: 0;
-  left: 0;
-}
-.swiper-container3 .swiper-pagination-bullet{
-  background-color: #ff8282;
+ .detail-page .swiper-pagination-bullet{
+   width: 0.8rem;
+   height: 0.8rem;
+   background-color: #ff8282 !important;
 }
 .good-info {
-  padding-top: 2rem;
   width: 100%;
   background-color: #fff;
 }
@@ -312,7 +297,6 @@ window.onscroll = function() {
 .good-promise .item {
   width: 24%;
   height: 4.4rem;
-  /*margin-left: 1rem;*/
   display: inline-block;
   font-size: 1.2rem;
   color: #c3c3c3;
@@ -336,6 +320,9 @@ window.onscroll = function() {
 }
 .by{
   background: url(../../assets/images/顺丰.png);
+}
+.detail-info {
+  margin-bottom: 6rem;
 }
 .detail-basebar {
   width: 100%;
@@ -394,19 +381,16 @@ window.onscroll = function() {
   width: 100%;
   margin-top: 1rem;
 }
-.mint-tab-container {
-  width: 100%;
-}
-.mint-tab-container-item {
-  display: block !important;
-}
-.mint-cell-value {
-  width: 100%;
-  display: block!important;
-}
-.mint-cell-value img {
+
+.mt-cell img {
   width: 100%;
   display: block;
+}
+.mt-cell span {
+  margin-left: 2rem;
+  margin-top: 1rm;
+  font-size: 1.4rem;
+  color: #333;
 }
 .mint-navbar{
   width: 100%;
@@ -414,13 +398,12 @@ window.onscroll = function() {
   font-size: 1.6rem;
   z-index: 10;
 }
-
 .mint-navbar .mint-tab-item.is-selected {
     border-bottom: 3px solid #f55669;
     color: #f55669;
     font-size: 1.6rem;
-  }
-  .toast {
+}
+.toast {
     font-size: 1.6rem ;
     width: 80%;
     margin: 0 auto;

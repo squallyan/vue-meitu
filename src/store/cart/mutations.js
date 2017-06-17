@@ -10,11 +10,11 @@ export default {
     state.cartList[state.curIndex].perNum ++
     state.cartInfos.total_nums ++
   },
-  [types.REDUCE_CART] (state) {
-    state.cartList[state.curIndex].perNum = parseInt(state.cartList[state.curIndex].perNum)
-    state.cartList[state.curIndex].perNum --
+  [types.REDUCE_CART] (state, id) {
+    state.cartList[id].perNum = parseInt(state.cartList[id].perNum)
+    state.cartList[id].perNum --
     state.cartInfos.total_nums --
-    console.log(state.curIndex)
+    // console.log(state.curIndex)
   },
   [types.CHECK_CART] (state, id) {
     state.curIndex = -1
@@ -37,7 +37,6 @@ export default {
         if(list[i].id == id){
           state.curIndex = i
           perNum = parseInt(state.cartList[state.curIndex].perNum)
-          // console.log(state.cartList[state.curIndex].perNum)
           break
         }
       }
@@ -51,6 +50,10 @@ export default {
  },
  [types.Logout] (state) {
    state.login = false
+ },
+ [types.TO_DETAIL](state, url) {
+   state.toUrl = url
+   console.log(state.toUrl)
  },
  [types.TotalPrice] (state) {
    state.cartInfos.total_price = 0
@@ -102,7 +105,13 @@ export default {
      }
    }
  },
- [types.CHANGE_STATE](state) {
-   state.cartList[state.curIndex].selected = !state.cartList[state.curIndex].selected
+ [types.CHANGE_STATE](state, id) {
+   state.cartList[id].selected = !state.cartList[id].selected
+ },
+ [types.ADD_BOOK](state, product) {
+   state.bookList.push(product)
+ },
+ [types.CANCEL_BOOK](state, id) {
+   state.bookList.splice(id, 1)
  }
 }

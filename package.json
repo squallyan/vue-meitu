@@ -10,9 +10,11 @@
     "build": "node build/build.js"
   },
   "dependencies": {
+    "axios": "^0.16.2",
     "mint-ui": "^2.2.7",
     "select-plugin": "^1.0.12",
     "vue": "^2.2.6",
+    "vue-awesome-swiper": "^2.4.2",
     "vue-router": "^2.3.1",
     "vue-swiper": "^0.5.0",
     "vue-transition": "^0.1.3",

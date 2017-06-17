@@ -14,10 +14,9 @@
       </router-link>
       <div class="product-wrapper">
         <ul class="products-list" >
-          <li class="item" v-for="product in products">
-            <!-- <span class="product-Id">{{product.id}}</span> -->
+          <li class="item" v-for="(product, index) in products">
             <div class="item-left">
-              <i :id="product.id" @click="selectOne" class="icon select" v-bind:class="{selected:product.selected}"></i>
+              <i :id="index" @click="selectOne" class="icon select" v-bind:class="{selected:product.selected}"></i>
               <img :src="product.imgSrc" alt="">
             </div>
 
@@ -25,7 +24,7 @@
               <p class="product-title">{{product.title}}</p>
               <p class="product-type">{{product.type}}</p>
               <p class="product-price">￥{{product.price}}</p>
-              <span @click="sub" :id="product.id" class="sub">-</span>
+              <span @click="sub" :id="index" class="sub">-</span>
               <span class="perNum">{{product.perNum}}</span>
               <span @click="add" :id="product.id" class="add">+</span>
             </div>
@@ -110,8 +109,8 @@ export default {
     selectOne: function (e) {
       let id = e.target.id
       document.querySelector('.pay-box').style.backgroundColor = '#f55669'
-      this.$store.commit('CHECK_CART', id)
-      this.$store.commit('CHANGE_STATE')
+      // this.$store.dispatch('check_cart', id)
+      this.$store.commit('CHANGE_STATE', id)
     },
     selectAll: function () {
       if(!this.isSelected) {
@@ -131,23 +130,27 @@ export default {
     },
     controlInform: function (e) {
       const id = e.target.id
+      console.log(id)
       localStorage.setItem('id', id)
       this.informShow = ! this.informShow
     },
     sub: function (e) {
       let Id = e.target.id
-      this.$store.commit('CHECK_CART',Id)
+      // this.$store.commit('CHECK_CART',Id)
+      // this.$store.commit('CHECK_CART', Id)
+      console.log(e.target.id)
+      // console.log(this.$store.state.cart.curIndex)
       if (document.querySelector('.perNum').innerHTML <= 1) {
         return
-
       } else {
-        this.$store.commit('REDUCE_CART')
+        this.$store.commit('REDUCE_CART', Id)
       }
     },
     add : function (e) {
       let goodId = e.target.id
       this.$store.commit('CHECK_CART', goodId)
       this.$store.commit('ADD_CART')
+      console.log(this.$store.state.cart.curIndex)
     },
     submitOrder: function (e) {
       if(this.$store.state.cart.cartList.length === 0) {

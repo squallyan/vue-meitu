@@ -77,7 +77,7 @@ export default {
 }
 </script>
 
-<style lang="css">
+<style lang="css" scoped>
 .userhome {
   width: 2.2rem;
   height: 2.2rem;

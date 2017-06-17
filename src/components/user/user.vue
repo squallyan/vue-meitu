@@ -47,29 +47,23 @@
       </ul>
     </div>
     <div class="menu-list">
-      <mt-cell  is-link>
+      <mt-cell title="我的代金券" is-link>
         <i slot="icon" class="icon jq"></i>
-        <span>我的代金券</span>
       </mt-cell>
-      <mt-cell is-link>
+      <mt-cell title="我的预约" is-link to='/book'>
         <i slot="icon" class="icon yy"></i>
-        <span>我的预约</span>
       </mt-cell>
-      <mt-cell is-link>
+      <mt-cell title="VIP会员" is-link>
         <i slot="icon" class="icon vip"></i>
-        <span>VIP 会员</span>
       </mt-cell>
-      <mt-cell is-link>
+      <mt-cell title="服务与支持" is-link>
         <i slot="icon" class="icon support"></i>
-        <span>服务与支持</span>
       </mt-cell>
-      <mt-cell is-link>
+      <mt-cell title="收货地址" is-link>
         <i slot="icon" class="icon address"></i>
-        <span>收货地址</span>
       </mt-cell>
-      <mt-cell>
-        <i slot="icon" class="icon logout"></i>
-        <span @click="logout">退出登录</span>
+      <mt-cell title="退出登录">
+        <i slot="icon"  @click="logout" class="icon logout"></i>
       </mt-cell>
     </div>
   </div>
@@ -98,12 +92,19 @@ export default {
     logout: function () {
       this.$store.commit('Logout')
       history.go(-1)
+    },
+    toBook: function() {
+      console.log('111')
+      this.$router.push({path:'/book'})
     }
   }
 }
 </script>
 
 <style lang="css" scoped>
+.mint-cell-title {
+  display: inline-block !important;
+}
 .user-info {
   width: 100%;
   height: 9rem;
@@ -151,7 +152,7 @@ export default {
 .nav .nav-item .icon {
   width: 2.5rem;
   height: 2.5rem;
-  display:block;
+  display: block;
   margin: 0 auto;
   background-size: cover;
   background-repeat: no-repeat;
@@ -180,25 +181,22 @@ export default {
 .mint-cell {
   width: 100%;
   height: 5rem;
+  justify-content: center;
+  align-items: center;
 }
-
+.mint-cell-title {
+  margin-top: 1rem;
+}
 .mint-cell-text {
-  display: block;
-}
-.mint-cell-value span {
-  width: 100%;
-  display: block;
-  text-align: left;
-  line-height: 5rem;
-  margin-left: 1rem;
+  display: inline-block;
 }
 .mint-cell .icon {
   width: 2rem;
   height: 2rem;
-  display: block;
-  margin: auto 0;
+  display: inline-block;
   background-size: cover;
   background-repeat: no-repeat;
+  vertical-align: middle;
 }
 .jq {
   background: url(../../assets/images/代金券.png);

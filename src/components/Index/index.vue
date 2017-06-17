@@ -17,26 +17,24 @@
         <i class="icon search"></i>
       </span>
     </div>
-    <div class="swiper-container">
-      <div class="swiper-wrapper">
-        <div class="swiper-slide slide1" style="width:100%">
-          <img src="http://mshopimg1.meitudata.com/5921032b47fff66246.jpg" alt="">
-        </div>
-        <div class="swiper-slide slide2" style="width:100%">
-          <img src="http://mshopimg2.meitudata.com/579aedbde2d0619482.jpg" alt="">
-        </div>
-        <div class="swiper-slide slide3" style="width:100%">
-          <img src="http://mshopimg4.meitudata.com/5912da04efd6e11335.jpg" alt="">
-        </div>
-        <div class="swiper-slide slide4" style="width:100%">
-          <img src="http://mshopimg4.meitudata.com/58db95cf9d82545293.jpg" alt="">
-        </div>
-        <div class="swiper-slide slide5" style="width:100%">
+    <swiper :options="swiperOption" ref="mySwiper">
+       <swiper-slide>
           <img src="http://mshopimg2.meitudata.com/59290fe961c4971444.jpg" alt="">
-        </div>
-      </div>
-      <div class="swiper-pagination"></div>
-    </div>
+       </swiper-slide>
+       <swiper-slide>
+         <img src="http://mshopimg4.meitudata.com/58db95cf9d82545293.jpg" alt="">
+       </swiper-slide>
+       <swiper-slide>
+         <img src="http://mshopimg4.meitudata.com/5912da04efd6e11335.jpg" alt="">
+       </swiper-slide>
+       <swiper-slide>
+         <img src="http://mshopimg2.meitudata.com/579aedbde2d0619482.jpg" alt="">
+       </swiper-slide>
+       <swiper-slide>
+         <img src="http://mshopimg1.meitudata.com/5921032b47fff66246.jpg" alt="">
+       </swiper-slide>
+       <div class="swiper-pagination"  slot="pagination"></div>
+   </swiper>
     <div class="view category">
       <ul class="list category">
         <li class="item">
@@ -69,9 +67,7 @@
     <div class="search-modal"  v-show="modalShow">
       <div class="search-box">
         <div class="input-box">
-          <router-link to='/search'  >
-            <i @click="searchhandle" class="searchIcon"></i>
-          </router-link>
+          <i @click="searchhandle" class="searchIcon"></i>
           <input @keypress.enter="searchhandle" type="text" class="keywords" placeholder="美图M8">
         </div>
         <span class="btn cancel" @click="showModal">取消</span>
@@ -106,12 +102,17 @@ import indexHot from './Index_hot'
 import indexPhone from './Index_phone'
 import indexGoods from './Index_accessories'
 import indexFamily from './Index_family'
-// import goTop from '../public/gotop'
 import footBar from '../public/footer'
 export default {
   data () {
     return {
-      mySwiper:null,
+      swiperOption: {
+        autoplay: 3000,
+        initialSlide: 1,
+        loop: true,
+        paginationClickable :true,
+        pagination: '.swiper-pagination',
+      },
       modalShow: false
     }
   },
@@ -126,17 +127,6 @@ export default {
         return '/user'
       }
     }
-  },
-  mounted () {
-    this.mySwiper = new Swiper('.swiper-container', {
-      autoplay: 2000,
-      direction: 'horizontal',
-      resistance: '100%',
-      mousewheelControl: true,
-      grabCursor: true,
-      paginationClickable: true,
-      pagination: '.swiper-pagination'
-    })
   },
   methods : {
     showModal: function() {
@@ -155,8 +145,11 @@ export default {
           position: 'top'
         })
         e.preventDefault()
+      } else {
+        localStorage.setItem('keywords',keywords)
+        this.$router.push({path:'/search'})
       }
-      localStorage.setItem('keywords',keywords)
+
     }
   },
   components: {
@@ -164,7 +157,6 @@ export default {
     indexPhone,
     indexGoods,
     indexFamily,
-    // goTop,
     footBar
   }
 }
@@ -225,17 +217,16 @@ export default {
   box-sizing: border-box;
   font-style: normal;
 }
-.swiper-container {
-  width: 100%;
-}
+
 .swiper-slide img{
   width: 100%;
 }
-.swiper-pagination-bullet {
+.index-page .swiper-pagination-bullet {
   width: 0.8rem;
   height: 0.8rem;
-  background-color: #ff8282;
+  background-color: #fff;
 }
+
 .view {
   width: 100%;
   height: 10rem;
@@ -322,7 +313,7 @@ export default {
 .search-box .input-box{
   margin-top: 1rem;
   height: 3.2rem;
-  width: 22rem;
+  width: 26rem;
   margin-left: 1.5rem;
   border: 1px solid #efefef;
   border-radius: 3px;

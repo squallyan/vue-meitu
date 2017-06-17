@@ -4,19 +4,20 @@ import Vue from 'vue'
 import App from './App'
 import MintUI from 'mint-ui'
 import 'mint-ui/lib/style.css'
-import 'mint-ui/lib/index.js'
+import VueAwesomeSwiper from 'vue-awesome-swiper'
+import Select from 'select-plugin'
 import router from './router'
-import Swiper from 'vue-swiper'
 import store from './store'
-Vue.use(Swiper)
+import axios from 'axios'
 Vue.use(MintUI)
+Vue.use(VueAwesomeSwiper)
 Vue.config.productionTip = false
-
+Vue.prototype.axios = axios
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
   router,
-  Swiper,
+  VueAwesomeSwiper,
   store,
   template: '<App/>',
   components: { App }

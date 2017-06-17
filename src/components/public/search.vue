@@ -7,15 +7,15 @@
       <div class="input-box">
         <input type="text" class="keywords" placeholder="美图M8">
       </div>
-        <span @click="searchhandle" class="search-btn">搜索</span>
+        <span  class="search-btn">搜索</span>
     </div>
     <div class="result-box">
       <p class="tips">
         共有
-        <span class="digit">0</span>
+        <span class="digit">{{phonelist.length}}</span>
         件商品
       </p>
-      <div class="result-list">
+      <div v-show="!hasResult" class="result-list">
         <img src="http://img1.app.meitudata.com/meitushop/v4/mobile_img/pic_error_emoji@2x.png" alt="" class="notFound">
         <p class="desc">
           亲 抱歉,未找到与关键词"
@@ -23,6 +23,15 @@
           "相关的产品,<br>
           请尝试切换关键词吧!
         </p>
+      </div>
+      <div class="result-content">
+        <ul class="phones">
+          <li class="item" v-for="phone in phonelist">
+            <img :src="phone.imgSrc" alt="">
+            <p class="phone-title">{{phone.title}}</p>
+            <p class="phone-price">￥{{phone.price}}</p>
+          </li>
+        </ul>
       </div>
     </div>
     <footBar></footBar>
@@ -33,25 +42,33 @@
 <script>
 import footBar from './footer'
 export default{
- computed: {
-   keywords() {
-     return localStorage.getItem('keywords')
-   }
- },
- methods: {
-   searchhandle: function () {
-     let keywords = document.querySelector('.keywords').value.trim()
-     console.log(keywords)
-     localStorage.setItem('keywords',keywords)
-   }
- },
+  data () {
+    return {
+      keywords:'',
+      hasResult: false,
+      phonelist:[]
+    }
+  },
+  mounted() {
+    this.keywords = localStorage.getItem('keywords')
+    if(this.keywords === '美图M8' ||this.keywords === '手机' ) {
+      this.hasResult = true
+      this.axios.get('http://easy-mock.com/mock/59435cf68ac26d795f180379/detail/phoneList')
+        .then((response) => {
+          this.phonelist = response.data.phoneList
+          console.log(this.phonelist)
+        })
+    } else {
+      this.hasResult= false
+    }
+  },
  components: {
    footBar
  }
 }
 </script>
 
-<style lang="css">
+<style lang="css" scoped>
 .header{
   align-items: center;
 }
@@ -115,5 +132,52 @@ export default{
   margin: 0 auto;
   padding-top: 5rem;
   margin-bottom: 2rem;
+}
+.result-content{
+  width: 100%;
+}
+.result-content .phones{
+  width: 100%;
+}
+.phones .item {
+  float: left;
+  width: 50%;
+  background-color: #fff;
+  position: relative;
+}
+.phones .item:after{
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 1px;
+  background: #eee;
+}
+.phones .item:nth-child(2n):before{
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 1px;
+  background: #eee;
+}
+.phones .item img {
+  width: 8rem;
+  height: 8rem;
+  display: block;
+  margin: 0 auto;
+}
+.phones .item p{
+  text-align: center;
+}
+.phone-title{
+  font-size: 1.6rem;
+
+}
+.phone-price{
+  color: #f55669;
+  font-size: 1.4rem;
 }
 </style>

@@ -12,7 +12,7 @@ export default  {
   add_cart: ({commit}) => {
     commit(types.ADD_CART)
   },
-  reduce_cart: ({commit}) =>{
+  reduce_cart: ({commit}, obj) =>{
     commit(types.REDUCE_CART)
   },
   login: ({commit}) =>{
@@ -30,10 +30,19 @@ export default  {
   create_order: ({commit}) => {
     commit(types.CREATE_ORDER)
   },
-  change_state: ({commit}) => {
+  change_state: ({commit}, obj) => {
     commit(types.CHANGE_STATE)
   },
   change_all_state: ({commit}) => {
     commit(types.CHANGE_ALL_STATE)
+  },
+  to_detail:({commit}, obj) => {
+    commit(types.TO_DETAIL)
+  },
+  add_book: ({commit}, {shop}) => {
+    commit(types.ADD_BOOK)
+  },
+  cancel_book: ({commit}, obj) => {
+    commit(types.CANCEL_BOOK)
   }
 }

@@ -51,6 +51,7 @@ export default {
       let reg =  /^1\d{10}$/
       if(reg.test(tel)) {
         this.$store.commit('Login')
+        localStorage.setItem('userTel',tel)
         history.go(-1)
       } else {
         e.preventDefault()

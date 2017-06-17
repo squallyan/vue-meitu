@@ -22,3 +22,10 @@ export const CHANGE_ALL_STATE = 'CHANGE_ALL_STATE'
 export const CREATE_ORDER = 'CREATE_ORDER'
 //支付完成后 删除购物车中已经完成支付的商品 更新购物车
 export const UPDATE_CART = 'UPDATE_CART'
+//切换商品详情
+export const  TO_DETAIL  = 'TO_DETAIL'
+
+// 添加预约商品
+export const ADD_BOOK = 'ADD_BOOK'
+//取消预约
+export const CANCEL_BOOK = 'CANCEL_BOOK'

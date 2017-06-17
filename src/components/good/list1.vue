@@ -2,16 +2,14 @@
     <div>
       <div class="goods-list">
         <ul class="list" v-for="good in allgoods">
-          <li class="item">
-            <router-link to='./detail'>
-              <div class="item-image">
-                <img :src=good.imgSrc alt="">
-              </div>
-              <div class="item-info">
-                <h4 class="goodtitle">{{good.title}}</h4>
-                <span class="price">¥ {{good.price}}</span>
-              </div>
-            </router-link>
+          <li class="item" @click="toDetail" :data-id="good.url">
+            <div class="item-image">
+              <img :src=good.imgSrc alt="">
+            </div>
+            <div class="item-info">
+              <h4 class="goodtitle">{{good.title}}</h4>
+              <span class="price">¥ {{good.price}}</span>
+            </div>
           </li>
         </ul>
       </div>
@@ -26,27 +24,38 @@ export default {
         {
           imgSrc: 'http://mshopimg3.meitudata.com/58aea5cca616828350.jpg?thumb220',
           title: 'MeituFamily抱枕',
-          price: 49
+          price: 79,
+          url:'bolster'
         },
         {
           imgSrc: 'http://mshopimg1.meitudata.com/5640736873a2c18944.jpg?thumb220',
           title: '限量版美图公仔',
-          price: 59
+          price: 59,
+          url:'doll'
         },
         {
           imgSrc: 'http://mshopimg2.meitudata.com/5621b27b8b2e886188.jpg?thumb220',
           title: '美图潮牌手机',
-          price: 129
+          price: 129,
+          url:'phoneShell'
         },
         {
           imgSrc: 'http://mshopimg1.meitudata.com/5436601baee3893413.jpg?thumb220',
           title: 'Meitu x MLGB 2017',
-          price: 168
+          price: 288,
+          url: 'clothes'
         },
         {
           imgSrc: 'http://mshopimg4.meitudata.com/582e95ef1b25279092.jpg?thumb220',
           title: '气球恐龙帽',
-          price: 56
+          price: 56,
+          url:'hat'
+        },
+        {
+          imgSrc: 'http://mshopimg3.meitudata.com/561e03a60e3cb47662.jpg?thumb220',
+          title:'美图手机专属耳机',
+          price:79,
+          url:'headSet'
         },
         {
           imgSrc: 'http://mshopimg4.meitudata.com/5694bafec3f0072720.jpg?thumb220',
@@ -79,42 +88,50 @@ export default {
           price:39
         },
         {
+          imgSrc: 'http://mshopimg3.meitudata.com/58aea5cca616828350.jpg?thumb220',
+          title: 'MeituFamily抱枕',
+          price: 49,
+          url:'bolster'
+        },
+        {
+          imgSrc: 'http://mshopimg1.meitudata.com/5640736873a2c18944.jpg?thumb220',
+          title: '限量版美图公仔',
+          price: 59,
+          url:'doll'
+        },
+        {
+          imgSrc: 'http://mshopimg2.meitudata.com/5621b27b8b2e886188.jpg?thumb220',
+          title: '美图潮牌手机',
+          price: 129,
+          url:'phoneShell'
+        },
+        {
+          imgSrc: 'http://mshopimg1.meitudata.com/5436601baee3893413.jpg?thumb220',
+          title: 'Meitu x MLGB 2017',
+          price: 168,
+          url: 'clothes'
+        },
+        {
+          imgSrc: 'http://mshopimg4.meitudata.com/582e95ef1b25279092.jpg?thumb220',
+          title: '气球恐龙帽',
+          price: 56,
+          url:'hat'
+        },
+        {
           imgSrc: 'http://mshopimg3.meitudata.com/561e03a60e3cb47662.jpg?thumb220',
           title:'美图手机专属耳机',
-          price:79
-        },
-        {
-          imgSrc: 'http://mshopimg3.meitudata.com/58aea5cca616828350.jpg?thumb220',
-          title: 'MeituFamily抱枕',
-          price: 49
-        },
-        {
-          imgSrc: 'http://mshopimg1.meitudata.com/5640736873a2c18944.jpg?thumb220',
-          title: '限量版美图公仔',
-          price: 59
-        },
-        {
-          imgSrc: 'http://mshopimg2.meitudata.com/5621b27b8b2e886188.jpg?thumb220',
-          title: '美图潮牌手机',
-          price: 129
-        },
-        {
-          imgSrc: 'http://mshopimg3.meitudata.com/58aea5cca616828350.jpg?thumb220',
-          title: 'MeituFamily抱枕',
-          price: 49
-        },
-        {
-          imgSrc: 'http://mshopimg1.meitudata.com/5640736873a2c18944.jpg?thumb220',
-          title: '限量版美图公仔',
-          price: 59
-        },
-        {
-          imgSrc: 'http://mshopimg2.meitudata.com/5621b27b8b2e886188.jpg?thumb220',
-          title: '美图潮牌手机',
-          price: 129
+          price:79,
+          url:'headSet'
         }
-
       ]
+    }
+  },
+  methods: {
+    toDetail: function(e) {
+      let url = e.currentTarget.dataset.id
+      console.log(url)
+      this.$store.commit('TO_DETAIL', url)
+      this.$router.push({path:'/detail'})
     }
   }
 }

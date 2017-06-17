@@ -25,6 +25,10 @@ import Allorder from '@/components/order/allorder'
 import Notpaid from '@/components/order/notPaid'
 import Delivered from '@/components/order/delivered'
 import Success from '@/components/order/success'
+import Summary from '@/components/phone/summary'
+import Photo from '@/components/phone/photo'
+import Param from '@/components/phone/param'
+import Book from '@/components/phone/book'
 Vue.use(Router)
 
 export default new Router({
@@ -105,7 +109,21 @@ export default new Router({
     },
     {
       path: '/phoneInfo',
-      component: PhoneInfo
+      component: PhoneInfo,
+      children: [
+        {
+          path:'/summary',
+          component: Summary
+        },
+        {
+          path: '/photo',
+          component: Photo
+        },
+        {
+          path:'/param',
+          component: Param
+        }
+      ]
     },
     {
       path: '/rush',
@@ -132,6 +150,10 @@ export default new Router({
           component: Success
         }
       ]
+    },
+    {
+      path: '/book',
+      component: Book
     }
   ]
 })
