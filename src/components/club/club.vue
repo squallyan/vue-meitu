@@ -49,15 +49,15 @@ export default {
     }
   }
 }
-$(window).scroll(function() {
-	var scrollTop = $(window).scrollTop();
+window.onscroll = function() {
+	var scrollTop =  document.documentElement.scrollTop || document.body.scrollTop
   var advBox = document.querySelector('.adv-box')
 	if (scrollTop > 60) {
     advBox.style.display ='block';
 	} else {
 		advBox.style.display ='none';
 	}
-	})
+	}
 </script>
 
 <style lang="css">

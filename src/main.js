@@ -9,6 +9,7 @@ import Select from 'select-plugin'
 import router from './router'
 import store from './store'
 import axios from 'axios'
+Vue.use(Select)
 Vue.use(MintUI)
 Vue.use(VueAwesomeSwiper)
 Vue.config.productionTip = false
