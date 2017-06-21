@@ -30,13 +30,13 @@
         <li @click="changeMenu" class="menu">S码通道</li>
       </ul>
     </div>
-    <Summary v-show="showDefault"></Summary>
+    <phoneSummary v-show="showDefault"></phoneSummary>
     <router-view></router-view>
   </div>
 </template>
 
 <script>
-import Summary from './summary'
+import phoneSummary from './summary'
 export default {
   data () {
     return {
@@ -65,7 +65,7 @@ export default {
     }
   },
   components:{
-    Summary
+    phoneSummary
   }
 }
 </script>

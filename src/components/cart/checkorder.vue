@@ -82,6 +82,7 @@ export default {
     return {
     }
   },
+
   computed: {
     username() {
       return localStorage.getItem('username')
@@ -97,7 +98,7 @@ export default {
       return this.$store.state.cart.cartList
     },
     total_price () {
-      this.$store.commit('TotalPrice')
+      this.$store.dispatch('totalprice')
       let total_price = this.$store.state.cart.cartInfos.total_price
       return total_price
     },

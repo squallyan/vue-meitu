@@ -12,7 +12,7 @@ export default  {
   add_cart: ({commit}) => {
     commit(types.ADD_CART)
   },
-  reduce_cart: ({commit}, obj) =>{
+  reduce_cart: ({commit}) =>{
     commit(types.REDUCE_CART)
   },
   login: ({commit}) =>{
@@ -30,7 +30,7 @@ export default  {
   create_order: ({commit}) => {
     commit(types.CREATE_ORDER)
   },
-  change_state: ({commit}, obj) => {
+  change_state: ({commit}) => {
     commit(types.CHANGE_STATE)
   },
   change_all_state: ({commit}) => {

@@ -90,7 +90,7 @@ export default {
   },
   methods: {
     logout: function () {
-      this.$store.commit('Logout')
+      this.$store.dispatch('logout')
       history.go(-1)
     },
     toBook: function() {

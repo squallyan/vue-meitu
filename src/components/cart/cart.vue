@@ -16,7 +16,7 @@
         <ul class="products-list" >
           <li class="item" v-for="(product, index) in products">
             <div class="item-left">
-              <i :id="index" @click="selectOne" class="icon select" v-bind:class="{selected:product.selected}"></i>
+              <i :id="product.id" @click="selectOne" class="icon select" v-bind:class="{selected:product.selected}"></i>
               <img :src="product.imgSrc" alt="">
             </div>
 
@@ -24,7 +24,7 @@
               <p class="product-title">{{product.title}}</p>
               <p class="product-type">{{product.type}}</p>
               <p class="product-price">￥{{product.price}}</p>
-              <span @click="sub" :id="index" class="sub">-</span>
+              <span @click="sub" :id="product.id" class="sub">-</span>
               <span class="perNum">{{product.perNum}}</span>
               <span @click="add" :id="product.id" class="add">+</span>
             </div>
@@ -93,7 +93,7 @@ export default {
       return this.$store.state.cart.cartList
     },
     total_price () {
-      this.$store.commit('TotalPrice')
+      this.$store.dispatch('totalprice')
       let total_price = this.$store.state.cart.cartInfos.total_price
       return total_price
     },
@@ -109,12 +109,12 @@ export default {
     selectOne: function (e) {
       let id = e.target.id
       document.querySelector('.pay-box').style.backgroundColor = '#f55669'
-      // this.$store.dispatch('check_cart', id)
-      this.$store.commit('CHANGE_STATE', id)
+      this.$store.dispatch('check_cart', id)
+      this.$store.dispatch('change_state')
     },
     selectAll: function () {
       if(!this.isSelected) {
-        this.$store.commit('CHANGE_ALL_STATE')
+        this.$store.dispatch('change_all_state')
         this.isSelected = true
         document.querySelector('.pay-box').style.backgroundColor = '#f55669'
       }else {
@@ -124,8 +124,7 @@ export default {
     },
     deleteProduct: function (e) {
       const id = localStorage.getItem('id')
-      // console.log(id)
-      this.$store.commit('DELETE_CART', id)
+      this.$store.dispatch('delete_cart', id)
       this.informShow = ! this.informShow
     },
     controlInform: function (e) {
@@ -136,20 +135,18 @@ export default {
     },
     sub: function (e) {
       let Id = e.target.id
-      // this.$store.commit('CHECK_CART',Id)
-      // this.$store.commit('CHECK_CART', Id)
       console.log(e.target.id)
-      // console.log(this.$store.state.cart.curIndex)
       if (document.querySelector('.perNum').innerHTML <= 1) {
         return
       } else {
-        this.$store.commit('REDUCE_CART', Id)
+        this.$store.dispatch('check_cart',Id)
+        this.$store.dispatch('reduce_cart')
       }
     },
     add : function (e) {
       let goodId = e.target.id
-      this.$store.commit('CHECK_CART', goodId)
-      this.$store.commit('ADD_CART')
+      this.$store.dispatch('check_cart', goodId)
+      this.$store.dispatch('add_cart')
       console.log(this.$store.state.cart.curIndex)
     },
     submitOrder: function (e) {
@@ -168,6 +165,14 @@ export default {
             duration: 5000
           })
         }
+      }
+      if(!document.querySelector('.selected')) {
+        this.$toast({
+          message: '你还没有选中要支付的宝贝哦~',
+          position: 'top',
+          duration: 5000
+        })
+        e.preventDefault()
       }
     }
   }

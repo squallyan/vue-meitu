@@ -50,9 +50,9 @@ export default {
       let tel = document.querySelector('.tel').value.trim()
       let reg =  /^1\d{10}$/
       if(reg.test(tel)) {
-        this.$store.commit('Login')
+        this.$store.dispatch('login')
         localStorage.setItem('userTel',tel)
-        history.go(-1)
+        this.$router.go(-1)
       } else {
         e.preventDefault()
         this.$toast({

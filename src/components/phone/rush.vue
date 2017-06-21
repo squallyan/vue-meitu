@@ -146,7 +146,7 @@ export default {
           ver,
           color,
         }
-        console.log(phoneInfo)
+        // console.log(phoneInfo)
         this.$store.commit('ADD_BOOK', phoneInfo)
       }
 

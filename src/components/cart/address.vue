@@ -19,6 +19,13 @@
         <input type="text" class="preAdd"  disabled= "true" placeholder="请选择省/市/县">
         <i @click="selectArea" class="icon dropdown"></i>
         <div v-show="show" class="select-box">
+          <region-picker
+            :placeholder="{province: '选择省份', city: '选择市', district: '选择地区'}"
+            :province.sync="region.province"
+            :city.sync="region.city"
+            :district.sync="region.district"
+            @onchange="change">
+          </region-picker>
         </div>
       </div>
       <div class="input-box">
@@ -43,11 +50,14 @@
 export default {
   data() {
     return {
-      show: false
+      show: false,
+      region: {}
+      // name,
+      // telephone,
+      // preAdd,
+      // address,
+      // postalcode
     }
-  },
-  mounted() {
-    new Select('.select-box')
   },
   methods: {
     setDefault: function (e) {
@@ -58,25 +68,71 @@ export default {
       }
     },
     saveAddress : function (){
+      if(this.name === '') {
+        this.$toast({
+          message:'请填写收货人',
+          position:'top',
+          duration: 1000
+        })
+        return
+      }
+      if(this.telephone === '') {
+        this.$toast({
+          message:'请填写电话号码',
+          position:'top',
+          duration: 1000
+        })
+        return
+      }
       let pca = document.querySelector('.preAdd').value
+      if(pca === '') {
+        this.$toast({
+          message:'请选择省市区',
+          position:'top',
+          duration: 1000
+        })
+        return
+      }
+      if(this.address === '') {
+        this.$toast({
+          message:'请填写详细地址',
+          position:'top',
+          duration: 1000
+        })
+        return
+      }
+      if(this.postalcode === '') {
+        this.$toast({
+          message:'请填写邮政编码',
+          position:'top',
+          duration: 1000
+        })
+        return
+      }
       localStorage.setItem('username',this.name)
       localStorage.setItem('tel',this.telephone)
       localStorage.setItem('pca',pca)
       localStorage.setItem('address',this.address)
       localStorage.setItem('postalcode',this.postalcode);
-      history.go(-1)
+      this.$router.go(-1)
     },
     selectArea: function (){
       this.show = !this.show
-      let province = document.querySelector('#province')
-      let city = document.querySelector('#city')
-      let area = document.querySelector('#area')
-      // console.log(province)
-      let pindex = province.selectedIndex
-      let cindex = city.selectedIndex
-      let aindex = area.selectedIndex
-      // console.log(index)
-      document.querySelector('.preAdd').value = province[pindex].text + city[cindex].text + area[aindex].text
+      // let province = document.querySelector('#province')
+      // let city = document.querySelector('#city')
+      // let area = document.querySelector('#area')
+      // // console.log(province)
+      // let pindex = province.selectedIndex
+      // let cindex = city.selectedIndex
+      // let aindex = area.selectedIndex
+      // // console.log(index)
+      document.querySelector('.preAdd').value =this.region.province +this.region.city + this.region.district
+    },
+    change: function (e) {
+      this.region.province = e.province
+      this.region.city = e.city
+      this.region.district = e.district
+      console.log(this.region)
     }
   }
 }
