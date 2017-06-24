@@ -9,8 +9,9 @@
   * vue2.0
   * vue-router     spa开发
   * vuex           专为 Vue.js 应用程序开发的状态管理模式,集中式存储管理应用的所有组件的状态
-  * Swiper         第三方插件Swiper 使用详情可见 (http://www.swiper.com.cn/)
+  * axios          一个基于Promise 用于浏览器和 nodejs 的 HTTP 客户端
   * mint-ui        基于vue.js的移动端组件库 帮助快速搭建页面
+  * easy-mock      前后端分离
   * html5 css3
 > ## 页面预览
  ![image](https://raw.githubusercontent.com/zsqio/zsqio.github.io/master/vuex-meitu-demo/demo-images/7.gif) <br>
