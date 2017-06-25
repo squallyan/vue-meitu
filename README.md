@@ -13,43 +13,46 @@
   * mint-ui        基于vue.js的移动端组件库 帮助快速搭建页面
   * easy-mock      前后端分离，提供数据接口
   * html5 css3  <br>
- **页面预览** <br>
- ![image](https://raw.githubusercontent.com/zsqio/zsqio.github.io/master/vuex-meitu-demo/demo-images/7.gif) <br>
- ![image](https://raw.githubusercontent.com/zsqio/zsqio.github.io/master/vuex-meitu-demo/demo-images/1.gif) <br>
+  
+**页面预览** <br>
+![image](https://raw.githubusercontent.com/zsqio/zsqio.github.io/master/vuex-meitu-demo/demo-images/7.gif) <br>
+![image](https://raw.githubusercontent.com/zsqio/zsqio.github.io/master/vuex-meitu-demo/demo-images/1.gif) <br>
 
  ## 主要实现功能 <br>
-  ** 商品信息展示 **  <br>
+  **商品信息展示**  <br>
   * 轮播图
   * mint-ui navbar 切换商品信息，产品参数
   * Toast 用户提醒信息
   * 主页面展示 <br>
+  
   **手机预约** <br>
   预约功能的实现主要在state中添加一个预约商品数组，当预约了商品后就使用数组的push方法将商品加入预约数组中，然后再我的预约页面就可以查看你预约的商品，同时你也可以取消预约，这就更简单了，直接将预约数组清空，当然这只只有一条预约消息的情况下，如果有多条记录，就可以借助splice方法进行数组切割。详细实现可以参考代码。 <br>  
-  **购物车** <br>
-  * 加入购物车 <br>
+  
+  ### 购物车 <br>
+  * **加入购物车** <br>
   包括两种状态: <br>
   1. 加入的商品在购物车中已经存在， 该商品已经存在购物车中,此时商品数量+1即可 <br>
-  2. 商品不在购物车,将新加入的商品信息push进cartList    
-  * 删除商品  
+  2. 商品不在购物车,将新加入的商品信息push进cartList    <br>
+  * **删除商品** 
   根据根据选中即将删除商品的id在cartList中遍历出该商品并给予删除,因为我在state里是一个数组暂存购物车中的商品， <br>
-  所以可以使用数组的splice方法将指定下标的某个商品删除,即 cartList.splice(index, 1)
-  * 商品支付
+  所以可以使用数组的splice方法将指定下标的某个商品删除,即 cartList.splice(index, 1) <br>
+  * **商品支付**
   根据用户选中前往支付的商品动态的显示需要支付的总金额,此时购物车中的商品如同一个个复选按钮，可选可不选，可单选可多选, <br>
   使用户的购物体验更好,这些共享状态之间相互切换，来及时驱动界面的渲染
-  * 用户登录状态判断  
+  * **用户登录状态判断** <br>  
   在提交订单和立即购买时,需要对用户的登录状态进行判断 <br>
   通过return this.$store.state.login 来获取登录状态
-  * 用户收货地址生成     
+  * **用户收货地址生成**    <br>
   提交订单时 若用户未生成收货地址 前往设置收货地址 <br>
-  此处我借用localstorage来存储收货地址信息，当用户再次登录时,则不需要再次设置收货地址
-  * 生成订单
+  此处我借用localstorage来存储收货地址信息，当用户再次登录时,则不需要再次设置收货地址 <br>
+  * **生成订单** <br>
   用户选中商品后生成相应订单 <br>
-  commit mutations ['CREATE_ORDER']
-  * 查看订单
+  commit mutations ['CREATE_ORDER']  <br>
+  * **查看订单** <br>
   支付操作完成后，在登录的情况下用户可在个人中心查看我的订单 <br>
-  * 购物车更新
+  * **购物车更新** <br>
   已经支付生成订单的商品从购物车中“消失”,已经加入购物车但还未支付的商品继续保留其原有的状态 <br>
-   这些状态间的切换，以及组件的更新都仰仗Vuex的响应式状态存储
+  这些状态间的切换，以及组件的更新都仰仗Vuex的响应式状态存储
       
       
   ## 小结 
