@@ -72,6 +72,24 @@
    * 搜索功能 现在已经可以搜索了，主要是依赖easy-mock 构造假数据，然后根据输入的关键字匹配，axios异步请求数据，再将数据渲染到页面上
    * 手机预约 这个功能也已经初步实现，但还略显粗糙，会进一步完善~  毕竟学习永远没有尽头，就像喝了脉动一样，根本停不下来~~~  <br>
    
-   
+
+   ## Build Setup
+
+    ```
+    bash
+    # install dependencies
+    npm install
+
+    # serve with hot reload at localhost:8080
+    npm run dev
+
+    # build for production with minification
+    npm run build
+
+    # build for production and view the bundle analyzer report
+    npm run build --report
+    ```
+
+For detailed explanation on how things work, checkout the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
 
 
