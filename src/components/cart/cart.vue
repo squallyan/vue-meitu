@@ -124,7 +124,7 @@ export default {
     },
     deleteProduct: function (e) {
       const id = localStorage.getItem('id')
-      this.$store.dispatch('delete_cart', id)
+      this.$store.commit('DELETE_CART', id)
       this.informShow = ! this.informShow
     },
     controlInform: function (e) {

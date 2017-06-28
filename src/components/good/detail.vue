@@ -105,7 +105,7 @@ export default {
   },
   mounted (){
     this.url = this.$store.state.cart.toUrl || 'doll'
-    this.axios.get('http://easy-mock.com/mock/59435cf68ac26d795f180379/detail/'+ this.url)
+    this.axios.get('https://easy-mock.com/mock/59435cf68ac26d795f180379/detail/'+ this.url)
       .then((response) => {
         this.goodInfo = response.data.goodInfo
         console.log(this.goodInfo)
