@@ -116,9 +116,10 @@ export default {
 .user-info .avatar {
   width: 6rem;
   height: 6rem;
+  border: 1px solid #ccc;
   border-radius: 50%;
   margin: auto .5rem;
-  background: url(http://id.meitu.com/images/avatar/thumb180.jpg) center center no-repeat;
+  background: url(../../assets/images/avatar.jpg) center center no-repeat;
   background-size:cover;
 }
 .user-info .loginInfo{

@@ -21,7 +21,7 @@
           亲 抱歉,未找到与关键词"
           <span class="keywords">{{keywords}}</span>
           "相关的产品,<br>
-          请尝试切换关键词吧!
+          请尝试切换关键词吧(比如手机/美图M8~)!
         </p>
       </div>
       <div class="result-content">

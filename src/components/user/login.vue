@@ -11,10 +11,10 @@
     <div class="login-container">
       <div class="login-input">
         <div class="input-box">
-          <input type="telephone" class="tel" placeholder="手机号">
+          <input type="telephone" v-model="tel" class="tel" placeholder="手机号">
         </div>
         <div class="input-box">
-          <input type="password" placeholder="密码">
+          <input type="password" v-model="psw" placeholder="密码">
         </div>
         <mt-button @click="login" type="primary" size="large">登录</mt-button>
       </div>
@@ -42,25 +42,34 @@
 export default {
   data () {
     return {
-
+        tel,
+        psw
     }
   },
   methods: {
     login : function (e) {
-      let tel = document.querySelector('.tel').value.trim()
+      // let tel = document.querySelector('.tel').value.trim()
+      let tel = this.tel.trim()
+      let psw = this.psw
       let reg =  /^1\d{10}$/
-      if(reg.test(tel)) {
-        this.$store.dispatch('login')
-        localStorage.setItem('userTel',tel)
-        this.$router.go(-1)
-      } else {
-        e.preventDefault()
+      if(psw === '') {
         this.$toast({
-          message: '请输入正确格式的手机号',
+          message:'密码不能为空',
           position: 'top'
         })
+      } else {
+        if(reg.test(tel)) {
+          this.$store.dispatch('login')
+          localStorage.setItem('userTel',tel)
+          this.$router.go(-1)
+        } else {
+          e.preventDefault()
+          this.$toast({
+            message: '请输入正确格式的手机号',
+            position: 'top'
+          })
+        }
       }
-
     }
   }
 }

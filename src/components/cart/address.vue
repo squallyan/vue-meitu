@@ -51,12 +51,13 @@ export default {
   data() {
     return {
       show: false,
-      region: {}
-      // name,
-      // telephone,
-      // preAdd,
-      // address,
-      // postalcode
+      name:'',
+      telephone:'',
+      preAdd:'',
+      address:'',
+      postalcode:'',
+      region: {},
+
     }
   },
   methods: {
@@ -114,18 +115,10 @@ export default {
       localStorage.setItem('pca',pca)
       localStorage.setItem('address',this.address)
       localStorage.setItem('postalcode',this.postalcode);
-      this.$router.go(-1)
+      this.$router.push({path: '/checkorder'})
     },
     selectArea: function (){
       this.show = !this.show
-      // let province = document.querySelector('#province')
-      // let city = document.querySelector('#city')
-      // let area = document.querySelector('#area')
-      // // console.log(province)
-      // let pindex = province.selectedIndex
-      // let cindex = city.selectedIndex
-      // let aindex = area.selectedIndex
-      // // console.log(index)
       document.querySelector('.preAdd').value =this.region.province +this.region.city + this.region.district
     },
     change: function (e) {

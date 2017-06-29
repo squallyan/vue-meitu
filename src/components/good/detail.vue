@@ -76,7 +76,7 @@
         </router-link>
         <em class="buynumber">{{count}}</em>
       </span>
-      <span @click="add_cart" class="cart-btn">
+      <span @click="add_cart" :id='goodInfo.id' class="cart-btn">
         加入购物车
       </span>
       <span @click="buyNow" class="buy-btn">
@@ -91,7 +91,7 @@ export default {
   data () {
     return {
       buyNum: 1,
-      selected: 1,
+      selected: '1',
       goodInfo:[],
       url:'',
       swiperOption2: {
@@ -114,6 +114,7 @@ export default {
 	watch: {
 		selected: function(val) {
 			this.selected = val;
+      console.log(this.selected);
 		}
   },
   computed : {
@@ -147,7 +148,7 @@ export default {
     addNum: function () {
       this.buyNum ++
     },
-    add_cart: function() {
+    add_cart: function(e) {
       const selected = document.querySelector('.selected')
       if(!selected){
         this.$toast({
@@ -163,14 +164,17 @@ export default {
           className: 'toast'
         })
         let goodId = document.querySelector('.selected').id
+        let Id = e.currentTarget.id
         console.log(goodId)
-        this.$store.dispatch('check_cart', goodId)
+        this.$store.commit('CHECK_CART',Id)
+        let curIndex = this.$store.state.cart.curIndex
         const goodTitle = document.querySelector('.good-text').innerHTML
         const productType = document .querySelector('.selected').innerHTML
         const imgSrc = this.goodInfo.imgSrc[goodId]
         const goodPrice = this.goodInfo.price
         const productInfo ={
-          id: goodId,
+          id: Id,
+          goodId: goodId,
           imgSrc: imgSrc,
           title: goodTitle,
           price: goodPrice,
@@ -178,7 +182,7 @@ export default {
           type: productType,
           selected: false
         }
-        if(this.$store.state.cart.curIndex != -1) {
+        if(curIndex != -1 && this.$store.state.cart.cartList[curIndex].goodId === goodId ) {
           this.$store.dispatch('add_cart')
         }else {
           this.$store.commit('CREATE_CART',productInfo)
